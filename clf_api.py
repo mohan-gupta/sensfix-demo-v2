@@ -78,11 +78,11 @@ async def categorize_and_respond(user_input: str, language: Language, memory: st
         incomplete_response = random.choice(response_choices)
         if language.value == "english":
             return {
-                "status": "incomplete",
+                "status": 430,
                 "response": incomplete_response
                 }
             
-        to_translate = ["status", "incomplete", "response", incomplete_response]
+        to_translate = ["status", 430, "response", incomplete_response]
         result = get_translation(to_translate, language.value)
         return result
 
@@ -98,9 +98,12 @@ async def categorize_and_respond(user_input: str, language: Language, memory: st
     
     if category_l1 not in CAT_L1_NAMES:
         if language.value == "english":
-            return {'response': "undefined level 1 category"}
+            return {
+                "status": 431,
+                'response': "undefined level 1 category"
+                }
         
-        to_translate = ["response", "undefined level 1 category"]
+        to_translate = ["status", 431, "response", "undefined level 1 category"]
         
         result = get_translation(to_translate, language.value)
         return result
@@ -115,9 +118,12 @@ async def categorize_and_respond(user_input: str, language: Language, memory: st
     
     if category_l2.lower() not in l2_categories:
         if language.value == "english":
-            return {'response': "undefined level 2 category"}
+            return {
+                "status": 432,
+                'response': "undefined level 2 category"
+                }
         
-        to_translate = ["response", "undefined level 2 category"]
+        to_translate = ["status", 432, "response", "undefined level 2 category"]
         
         result = get_translation(to_translate, language.value)
         return result
@@ -137,6 +143,7 @@ async def categorize_and_respond(user_input: str, language: Language, memory: st
     
     if language.value == "english":
         return {
+            "status": 200,
             "complaint_summary":summarized_context,
             "ticket status": ticket_result,
             "Level 1 Category": category_l1,
@@ -145,6 +152,7 @@ async def categorize_and_respond(user_input: str, language: Language, memory: st
         }
     
     to_translate = [
+        "status", 200,
         "complaint summary", summarized_context,
         "ticket status", ticket_result,
         "Level 1 Category", category_l1,
